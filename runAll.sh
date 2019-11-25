@@ -7,8 +7,8 @@ do
 	do
 		for i in {1..30}
 		do
-			RESULT_MS=$(program input)
-			echo "$program,$input,$i,$RESULT_MS" >> ./results.csv
+			RESULT_MS=$($program $input)
+			echo "$(basename $program),$(basename $input),$i,$RESULT_MS" >> ./results.csv
 		done
 	done
 done
