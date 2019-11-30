@@ -3,6 +3,7 @@
 #include <stack>
 #include <queue>
 #include <sys/time.h>
+#include <stdlib.h>
 
 using namespace std;
 
