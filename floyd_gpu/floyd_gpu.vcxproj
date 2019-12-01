@@ -13,6 +13,9 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="..\src\floyd_gpu.cu" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{52148429-60E8-48FF-B4E7-A55674C91506}</ProjectGuid>
     <RootNamespace>matrixMul_vs2017</RootNamespace>
@@ -97,9 +100,6 @@
       <TargetMachinePlatform>64</TargetMachinePlatform>
     </CudaCompile>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <CudaCompile Include="floyd_gpu.cu" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(CUDAPropsPath)\CUDA 9.2.targets" />

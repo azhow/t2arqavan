@@ -1,8 +1,9 @@
 #include <fstream>
 #include <iostream>
+#pragma warning( disable : 4703 )
 // C++ Program for Floyd Warshall Algorithm  
 //#include <bits/stdc++.h> 
-#include <sys/time.h>
+#include <ctime>
 using namespace std; 
   
 /* Define Infinite as a large enough 
@@ -17,12 +18,8 @@ void floydWarshall (int** graph, int** dist, int nNodes);
 
 double GetTime(void)
 {
-   struct  timeval time;
-   double  Time;
-
-   gettimeofday(&time, (struct timezone *) NULL);
-   Time = ((double)time.tv_sec*1000000.0 + (double)time.tv_usec);
-   return(Time);
+	clock_t time = clock();
+	return time / (CLOCKS_PER_SEC / 1000);
 }
 
 
@@ -69,12 +66,12 @@ int main(int argc, char **argv){
 
 	clockBegin = GetTime();
     floydWarshall(graph, dist, nNodes);  
-	timeElapsed = (GetTime() - clockBegin)/1000000;
+	timeElapsed = (GetTime() - clockBegin) / 1000.0f;
 
     // Print the shortest distance matrix  
     printSolution(dist, nNodes);  
 
-    printf("Computation time: %5lf\n", timeElapsed);
+    printf("Computation time: %5lf seconds\n", timeElapsed);
 
 
     return 0;  
