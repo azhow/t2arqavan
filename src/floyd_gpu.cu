@@ -11,6 +11,41 @@ using namespace std;
 value.This value will be used for  
 vertices not connected to each other */
 #define INF 99999  
+
+void floydWarshall (int** graph, int** dist, int nNodes)  
+{  
+
+  
+    /* Add all vertices one by one to  
+    the set of intermediate vertices.  
+    ---> Before start of an iteration,  
+    we have shortest distances between all  
+    pairs of vertices such that the  
+    shortest distances consider only the  
+    vertices in set {0, 1, 2, .. k-1} as 
+    intermediate vertices.  
+    ----> After the end of an iteration,  
+    vertex no. k is added to the set of  
+    intermediate vertices and the set becomes {0, 1, 2, .. k} */
+    for (int k = 0; k < nNodes; k++)  
+    {  
+        // Pick all vertices as source one by one  
+        for (int i = 0; i < nNodes; i++)  
+        {  
+            // Pick all vertices as destination for the  
+            // above picked source  
+            for (int j = 0; j < nNodes; j++)  
+            {  
+                // If vertex k is on the shortest path from  
+                // i to j, then update the value of dist[i][j]  
+                if (dist[i][k] + dist[k][j] < dist[i][j])  
+                    dist[i][j] = dist[i][k] + dist[k][j];  
+            }  
+        }  
+    }  
+	
+  
+}  
   
 // Solves the all-pairs shortest path  
 // problem using Floyd Warshall algorithm  
@@ -72,7 +107,7 @@ int main(int argc, char **argv){
 
 	if (argc > 1) 
 	{
-		cout << "input file is " << argv[1] << endl;
+		//cout << "input file is " << argv[1] << endl;
 		ifstream inputfile(argv[1]);
 		inputfile >> nNodes;
 		graph = new int*[nNodes];
@@ -125,12 +160,24 @@ int main(int argc, char **argv){
 	auto end = std::chrono::system_clock::now();
 	auto timeElapsed = (end - start);
 	cudaMemcpy(aux_dist, device_dist, nNodes * nNodes * sizeof(int),cudaMemcpyDeviceToHost);
+	floydWarshall (graph, dist, nNodes);
 
+	/*int count = 0;
     for (i = 0; i < nNodes; i++)  {
+        for (j = 0; j < nNodes; j++) {
+			if (dist[i][j] != aux_dist[i*nNodes+j]){
+				count += 1;
+				cout << "cpu: " << dist[i][j] << " vs gpu: " << aux_dist[i*nNodes+j] << endl;
+			}
+		}
+	}
+	cout << "Error count between CPU and GPU: " << count << endl;*/
+	for (i = 0; i < nNodes; i++)  {
         for (j = 0; j < nNodes; j++) {
 			dist[i][j] = aux_dist[i*nNodes+j];
 		}
 	}
+	
 	//cout << graph[0][1] << " vs " << aux_dist[1] << "at position (" << 0 << "," << 1 << ")\n";
     // Print the shortest distance matrix  
     //printSolution(dist, nNodes);  
