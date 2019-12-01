@@ -5,7 +5,7 @@
 //#include <sys/time.h>
 #include <ctime>
 #include <stdlib.h>
-
+#pragma warning( disable : 4703 )
 using namespace std;
 
 #define INF 99999
