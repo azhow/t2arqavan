@@ -2,9 +2,10 @@
 #include <fstream>
 #include <stack>
 #include <queue>
-#include <sys/time.h>
+//#include <sys/time.h>
+#include <ctime>
 #include <stdlib.h>
-
+#pragma warning( disable : 4703 )
 using namespace std;
 
 #define INF 99999
@@ -12,12 +13,8 @@ using namespace std;
 
 double GetTime(void)
 {
-   struct  timeval time;
-   double  Time;
-   
-   gettimeofday(&time, (struct timezone *) NULL);
-   Time = ((double)time.tv_sec*1000000.0 + (double)time.tv_usec);
-   return(Time);
+	clock_t time = clock();
+	return time / (CLOCKS_PER_SEC / 1000);
 }
 
 
@@ -62,8 +59,8 @@ int main(int argc, char **argv){
 		if(v == GOAL)
 		{
 			cout << "Found " << GOAL << endl;
-			timeElapsed = (GetTime() - clockBegin)/1000000;
-			printf("Computation time: %5lf\n", timeElapsed);
+			timeElapsed = (GetTime() - clockBegin) / 1000.0f;
+			printf("Computation time: %5lf seconds\n", timeElapsed);
 			return 0;
 		}
 		for(int i = 0; i < nNodes; i++)

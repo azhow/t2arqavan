@@ -30,3 +30,10 @@
 *.exe
 *.out
 *.app
+
+src/x64/
+floyd_cpu/x64/
+floyd_gpu/x64/
+bfs_cpu/x64/
+bfs_gpu/x64/
+src/.vs/
